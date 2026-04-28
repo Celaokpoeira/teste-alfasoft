@@ -51,6 +51,7 @@
             <span class="value">{{ $contact->created_at->format('d/m/Y \à\s H:i') }}</span>
         </div>
 
+        @auth
         <div class="actions">
             <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-edit">Editar Contato</a>
             
@@ -60,9 +61,9 @@
                 <button type="submit" class="btn btn-delete" onclick="return confirm('Tem certeza que deseja excluir este contato?')">Excluir Contato</button>
             </form>
         </div>
+        @endauth
 
         <a href="{{ route('contacts.index') }}" class="btn btn-back">← Voltar para a Lista</a>
     </div>
 </body>
 </html>
-
