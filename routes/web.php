@@ -9,12 +9,11 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Rotas Públicas (Qualquer um vê)
+// Rota principal e Index
 Route::get('/', function () { return redirect()->route('contacts.index'); });
 Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
-Route::get('/contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');
 
-// Rotas Protegidas (Só Logado)
+// Rotas Protegidas (Vêm ANTES do curinga 'show')
 Route::middleware('auth')->group(function () {
     Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
     Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
@@ -22,3 +21,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/contacts/{contact}', [ContactController::class, 'update'])->name('contacts.update');
     Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
 });
+
+// A rota de detalhes (curinga) fica por último
+Route::get('/contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');
